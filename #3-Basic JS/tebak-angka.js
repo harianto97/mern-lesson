@@ -26,6 +26,10 @@ function validasi (inputP1, inputP2) {
         alert("Angka yang dimasukkan tidak boleh lebih dari 3");
         return false;
     }
+    if (!Number.isInteger(inputP1) || !Number.isInteger(inputP2)) {
+        alert("Angka yang dimasukkan tidak boleh 'koma', Harus 1 atau 2 atau 3");
+        return false;
+    }
     return true;
     
 }
