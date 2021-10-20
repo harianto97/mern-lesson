@@ -1,7 +1,14 @@
 fetch(`https://newsapi.org/v2/top-headlines?country=id&apiKey=94d0235861c54cc1be4fb98fd9e7779c`)
   .then(res => res.json())
   .then(res => {
-      document.getElementById('dataNews').innerHTML = render (res)
+    if (res.status==='error'){
+      throw new Error(res.message);
+    } else {
+    document.getElementById('dataNews').innerHTML = render (res)
+    }
+  })
+  .catch(err => {
+    document.getElementById('dataNews').innerHTML = handlerError(err)
   });
 
 
@@ -11,9 +18,15 @@ button.addEventListener('click', function(){
   fetch(`https://newsapi.org/v2/everything?q=${textSearch.value}&language=id&apiKey=94d0235861c54cc1be4fb98fd9e7779c`)
   .then(res => res.json())
   .then(res => {
-    // console.log(res);
+    if (res.status==='error'){
+      throw new Error(res.message);
+    } else {
     document.getElementById('dataNews').innerHTML = render (res)
+    }
   })
+  .catch(err => {
+    document.getElementById('dataNews').innerHTML = handlerError(err)
+  });
 });
 
 
@@ -37,4 +50,13 @@ function render(res) {
     ` 
   })
   return open+close;
+}
+
+function handlerError(err) {
+  let pesan = `
+  <div class="text-center">
+  <p>${err}</p>
+  </div>
+  `
+  return pesan;
 }
