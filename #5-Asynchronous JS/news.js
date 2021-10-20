@@ -20,8 +20,14 @@ button.addEventListener('click', function(){
   .then(res => {
     if (res.status==='error'){
       throw new Error(res.message);
-    } else {
-    document.getElementById('dataNews').innerHTML = render (res)
+    }
+    if (res.status!=='error') {
+      if (res.totalResults===0){
+        document.getElementById('dataNews').innerHTML = emptyResult ()
+      } else {
+        document.getElementById('dataNews').innerHTML = render (res)
+      }
+    
     }
   })
   .catch(err => {
@@ -59,4 +65,11 @@ function handlerError(err) {
   </div>
   `
   return pesan;
+}
+function emptyResult() {
+  return `
+  <div class="text-center">
+  <p>Data Yang Anda Cari Tidak Ditemukan</p>
+  </div>
+  `
 }
